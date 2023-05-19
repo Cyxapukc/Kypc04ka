@@ -7,18 +7,8 @@
 #include <iostream>
 #include <fstream>
 #include <conio.h>
-using namespace std;
-
-ostream& operator<<(ostream& os, Student& st)
-{
-    os << st.sn.surname << " " << st.sn.name << " " << st.sn.midname << " " << st.sn.institute << " " << st.sn.department << " " << st.sn.group << " " << st.sn.id << " " << st.sn.birthday << " " << st.sn.enteranceYear << " " << st.sn.sex << endl;
-    return os;
-}
-istream& operator>>(istream& is, Student& st)
-{
-    is >> st.sn.surname >> st.sn.name >> st.sn.midname >> st.sn.institute >> st.sn.department >> st.sn.group >> st.sn.id >> st.sn.birthday >> st.sn.enteranceYear >> st.sn.sex;
-    return is;
-}
+#include <string>
+#include <string.h>
 
 void Program_menu()
 {
@@ -48,7 +38,7 @@ void Program_menu()
     }
     system("cls");
 }
-void Student_menu(ClassList list, string file_name)
+void Student_menu(ClassList *list, std::string file_name)
 {
     char Action;
     system("cls");
@@ -60,7 +50,7 @@ void Student_menu(ClassList list, string file_name)
     case '1': {
         system("cls");
         drawLine('-');
-        list.printItems();
+        list->printItems();
         drawLine('-');
         drawLine('|', "(Нажмите любую клавишу, чтобы вернуться...)");
         drawLine('-');
@@ -69,41 +59,43 @@ void Student_menu(ClassList list, string file_name)
     }
     case '2': {
         string id;
-        Student current;
+        Student *current = new Student;
         system("cls");
         drawLine('-');
-        drawLine('|', "Введите номер зачётной книжки: ");
+        drawLine('|', "Введите номер зачётной книжки");
         id = ConsoleInput(10);
         drawLine('-');
         system("cls");
-        current = list.getItem(id);
-        current.printInfo();
+        *current = list->getItem(id);
+        current->printInfo();
         drawLine('-');
         drawLine('|', "(Нажмите любую клавишу, чтобы вернуться...)");
         drawLine('-');
         _getche();
+        delete current;
         break;
     }
     case '3': {
-        Student st;
-        st.setDefaultData();
+        Student *st = new Student;
+        st->setDefaultData();
+        list->addItem(*st);
         fstream file;
         file.open(file_name, fstream::in | fstream::out | fstream::app);
-        file << st;
+        file << *st;
         file.close();
+        delete st;
         break;
     }
     case '4': {
         string id;
         system("cls");
         drawLine('-');
-        drawLine('|', "Введите номер зачётной книжки: ");
+        drawLine('|', "Введите номер зачётной книжки");
         id = ConsoleInput(10);
         drawLine('-');
-        list.deleteItem(list.getIndex(id));
-        Student st;
-
-
+        list->deleteItem(list->getIndex(id));
+        Student *st = new Student;
+        delete st;
         break;
     }
     case '5': {
@@ -111,13 +103,17 @@ void Student_menu(ClassList list, string file_name)
     }
     case '6': {
         string id;
+        Student* st = new Student;
         system("cls");
         drawLine('-');
-        drawLine('|', "Введите номер зачётной книжки: ");
+        drawLine('|', "Введите номер зачётной книжки");
         id = ConsoleInput(10);
         drawLine('|', id.c_str());
         drawLine('-');
-        list.getItem(id).editData();
+        *st = list->getItem(id);
+        st->editData();
+        list->deleteItem(list->getIndex(id));
+        list->insertItem(list->getIndex(id), *st);
         break;
     }
     case '7': {
@@ -131,12 +127,10 @@ void Student_menu(ClassList list, string file_name)
     }
     system("cls");
 }
-
-void Main_menu(ClassList list, string file_name, string tmp_name)
+void Main_menu(ClassList *list, std::string file_name)
 {
     char Action = '0';
     fstream file;
-    fstream tmp;
     system("cls");
     drawLine('-');
     setInCenter("---<=== ДОБРО ПОЖАЛОВАТЬ В ПРОГРАММУ 'БАЗА ДАННЫХ СТУДЕНТОВ'! ===>---");
@@ -157,10 +151,10 @@ void Main_menu(ClassList list, string file_name, string tmp_name)
             break;
         }
         case '3': {
-            tmp.open(tmp_name, fstream::in | fstream::out | fstream::app);
+            file.open(file_name, fstream::out);
+            file.close();
             file.open(file_name, fstream::in | fstream::out | fstream::app);
-            file.clear();
-            if (!tmp.is_open())
+            if (!file.is_open())
             {
                 drawLine('-');
                 setInCenter("Ошибка открытия файла!");
@@ -168,22 +162,41 @@ void Main_menu(ClassList list, string file_name, string tmp_name)
             }
             else
             {
-                for (int i = 0; i < list.getCount(); i++)
+                for (int i = 1; i < list->getCount(); i++)
                 {
-                    Student value = list.getItem(i);
+                    Student value = list->getItem(i);
                     file << value;
                 }
             }
-            tmp.swap(file);
             system("cls");
             drawLine('-');
             setInCenter("---<=== ЗАВЕРШЕНИЕ РАБОТЫ ПРОГРАММЫ ===>---");
             drawLine('-');
             exit(0);
-
         }
         }
     }
     return;
 }
 
+ostream& operator<<(ostream& os, Student& st)
+{
+    os << st.get(1) << " " << st.get(2) << " " << st.get(3) << " " << st.get(4) << " " << st.get(5) << " " << st.get(6) << " " << st.get(7) << " " << st.get(8) << " " << st.get(9) << " " << st.get(10) << endl;
+    return os;
+}
+
+istream& operator>>(istream& is, Student& st)
+{
+    string surname = st.get(1);
+    string name = st.get(2);
+    string midname = st.get(3);
+    string institute = st.get(4);
+    string department = st.get(5);
+    string group = st.get(6);
+    string id = st.get(7);
+    string birthday = st.get(8);
+    string enteranceYear = st.get(9);
+    string sex = st.get(10);
+    is >> surname >> name >> midname >> institute >> department >> group >> id >> birthday >> enteranceYear >> sex;
+    return is;
+}

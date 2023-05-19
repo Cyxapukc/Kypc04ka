@@ -106,43 +106,59 @@ bool DateCheck(string date)
 string ConsoleInput(const int len, const char tag[])
 {
     string data;
+    drawLine('|', "(При вводе недопустимые символы учитываться не будут)");
     char ch = 0;
     if (tag == "all") {
         data = "";
+        cout << "| Ввод --> ";
         while (ch != 13) {
             ch = _getche();
             if (ch == 8) { if (data.length() > 0) data.pop_back(); }
-            if ((ch >= 48 && ch <= 57) || (ch >= 97 && ch <= 122) || (ch >= 33 && ch <= 47))
+            if ((ch >= 48 && ch <= 57) || (ch >= -64 && ch <= -1) || (ch >= 33 && ch <= 47) || (ch == 200) || (ch == 216))
             {
                 data += ch;
                 if (data.length() > len) {
+                    for (int i = 0; i < 68 - len; i++) { cout << " "; }
+                    cout << "|" << endl;
+                    cout << endl;
                     drawLine('|', "Превышен лимит ввода, повторите попытку");
+                    cout << "| Ввод --> ";
                     data = "";
                 }
             }
         }
+        for (int i = 0; i < 68 - data.length(); i++) { cout << " "; }
+        cout << "|" << endl;
         return data;
     }
     if (tag == "char")
     {
         data = "";
+        cout << "| Ввод --> ";
         while (ch != 13) {
             ch = _getche();
             if (ch == 8) { if (data.length() > 0) data.pop_back(); }
-            if (ch >= 97 && ch <= 122)
+            if ((ch >= -64 && ch <= -1) || (ch == 200) || (ch == 216))
             {
                 data += ch;
                 if (data.length() > len) {
+                    for (int i = 0; i < 68 - len; i++) { cout << " "; }
+                    cout << "|";
+                    cout << endl;
                     drawLine('|', "Превышен лимит ввода, повторите попытку");
+                    cout << "| Ввод --> ";
                     data = "";
                 }
             }
         }
+        for (int i = 0; i < 68 - data.length(); i++) { cout << " "; }
+        cout << "|" << endl;
         return data;
     }
     if (tag == "num")
     {
         data = "";
+        cout << "| Ввод --> ";
         while (ch != 13) {
             ch = _getche();
             if (ch == 8) { if (data.length() > 0) data.pop_back(); }
@@ -150,11 +166,16 @@ string ConsoleInput(const int len, const char tag[])
             {
                 data += ch;
                 if (data.length() > len) {
+                    for (int i = 0; i < 68 - len; i++) { cout << " "; }
+                    cout << "|";
                     drawLine('|', "Превышен лимит ввода, повторите попытку");
+                    cout << "| Ввод --> ";
                     data = "";
                 }
             }
         }
+        for (int i = 0; i < 68 - data.length(); i++) { cout << " "; }
+        cout << "|";
         return data;
     }
 }

@@ -22,7 +22,7 @@ public:
     void push_back(Student data);
     void editItem(int index, Student data);
     int getIndex(string id);
-    void deleteItem(int index); 
+    void deleteItem(int index);
     int getCount();
     Student getItem(string id);
     Student getItem(int index);
