@@ -3,6 +3,7 @@
 #include "Menu_Tools.h"
 #include <conio.h>
 #include <iostream>
+#include <sstream>
 using namespace std;
 
 bool IsNum(char ch)
@@ -13,13 +14,13 @@ bool IsNum(char ch)
 char menuIntInput(int first, int end, const char fl[])
 {
     int count = 0;
-    drawLine('|', "Введите нужную цифру и нажмите любую клавишу");
+    drawLine('|', "Введите нужную цифру");
     cout << "| Цифра: ";
     char ch = '0';
     ch = _getche();
     for (int i = 0; i < 69; i++) { cout << " "; } cout << "|";
     drawLine('-');
-    _getch();
+    _getch;
     while (!(47 + first < (int)(ch) && (int)(ch) < 58 - (9 - end)))
     {
         count++;
@@ -30,6 +31,26 @@ char menuIntInput(int first, int end, const char fl[])
             if (fl == "student") { printStudentMenu(); }
             if (fl == "program") { printProgramMenu(); }
             if (fl == "id") { printIdMenu(); }
+            if (fl == "exit") {
+                drawLine('-');
+                drawLine('|', "Вы хотите сохранить внесённые изменения? (0 - нет, 1 - да)");
+                drawLine('-');
+            }
+            if (fl == "programm_choose") {
+                drawLine('-');
+                drawLine('|', "Выберите нужный семестр от 1 до 9:");
+                drawLine('-');
+            }
+            if (fl == "discipline_choose") {
+                drawLine('-');
+                drawLine('|', "Выберите учебную дисциплину, которую хотите изменить/добавить, от 0 до 9:");
+                drawLine('-');
+            }
+            if (fl == "mark") {
+                drawLine('-');
+                drawLine('|', "Введите оценку от 0 до 5 (0 - незачёт, 1 - зачёт, 2 - неуд, 3 - удовл, 4 - хорошо, 5 - отлично)");
+                drawLine('-');
+            }
             count = 0;
         }
         cout << "|" << " Последний введённый символ: " << ch;
@@ -38,24 +59,24 @@ char menuIntInput(int first, int end, const char fl[])
         {
             cout << "| Ошибка, введенный символ " << ch << " не является цифрой, введите цифру в диапазоне[" << first << ";" << end << "]|";
             drawLine('-');
-            drawLine('|', "Введите нужную цифру и нажмите любую клавишу");
+            drawLine('|', "Введите нужную цифру");
             cout << "| Цифра: ";
             ch = _getche();
             for (int i = 0; i < 69; i++) { cout << " "; }
             cout << "|";
             drawLine('-');
-            _getch();
+            _getch;
         }
         else
         {
             cout << "| Ошибка, число не входит в заданный диапазон [" << first << ";" << end << "], попробуйте ещё раз!       |" << endl;
-            drawLine('|', "Введите нужную цифру и нажмите любую клавишу");
+            drawLine('|', "Введите нужную цифру");
             cout << "| Цифра: ";
             ch = _getche();
             for (int i = 0; i < 69; i++) { cout << " "; }
             cout << "|";
             drawLine('-');
-            _getch();
+            _getch;
         }
     }
     return ch;
@@ -114,7 +135,7 @@ string ConsoleInput(const int len, const char tag[])
         while (ch != 13) {
             ch = _getche();
             if (ch == 8) { if (data.length() > 0) data.pop_back(); }
-            if ((ch >= 48 && ch <= 57) || (ch >= -64 && ch <= -1) || (ch >= 33 && ch <= 47) || (ch == 200) || (ch == 216))
+            if ((ch >= 48 && ch <= 57) || (ch >= -64 && ch <= -1) || (ch >= 32 && ch <= 47) || (ch == 200) || (ch == 216))
             {
                 data += ch;
                 if (data.length() > len) {
@@ -127,8 +148,7 @@ string ConsoleInput(const int len, const char tag[])
                 }
             }
         }
-        for (int i = 0; i < 68 - data.length(); i++) { cout << " "; }
-        cout << "|" << endl;
+        drawLine('|', "Вы ввели: ", data.c_str());
         return data;
     }
     if (tag == "char")
@@ -138,7 +158,7 @@ string ConsoleInput(const int len, const char tag[])
         while (ch != 13) {
             ch = _getche();
             if (ch == 8) { if (data.length() > 0) data.pop_back(); }
-            if ((ch >= -64 && ch <= -1) || (ch == 200) || (ch == 216))
+            if ((ch >= -64 && ch <= -1) || (ch >= 32 && ch <= 47))
             {
                 data += ch;
                 if (data.length() > len) {
@@ -151,8 +171,7 @@ string ConsoleInput(const int len, const char tag[])
                 }
             }
         }
-        for (int i = 0; i < 68 - data.length(); i++) { cout << " "; }
-        cout << "|" << endl;
+        drawLine('|', "Вы ввели: ", data.c_str());
         return data;
     }
     if (tag == "num")
@@ -162,7 +181,7 @@ string ConsoleInput(const int len, const char tag[])
         while (ch != 13) {
             ch = _getche();
             if (ch == 8) { if (data.length() > 0) data.pop_back(); }
-            if (ch >= 48 && ch <= 57 || (ch >= 33 && ch <= 47))
+            if (ch >= 48 && ch <= 57 || (ch >= 32 && ch <= 47))
             {
                 data += ch;
                 if (data.length() > len) {
@@ -174,16 +193,19 @@ string ConsoleInput(const int len, const char tag[])
                 }
             }
         }
-        for (int i = 0; i < 68 - data.length(); i++) { cout << " "; }
-        cout << "|";
+        drawLine('|', "Вы ввели: ", data.c_str());
         return data;
     }
 }
-int countRecords(string filename) {
-    FILE* File;
-    fopen_s(&File, filename.c_str(), "r");
-    fseek(File, 0L, SEEK_END);
-    int size = ftell(File);
-    fclose(File);
-    return size / sizeof(Student);
+string to_string(const int &x)
+{
+    stringstream buf;
+    buf << x;
+    return buf.str();
+}
+string to_string(const float& x)
+{
+    stringstream buf;
+    buf << x;
+    return buf.str();
 }

@@ -8,7 +8,6 @@ ClassList::ClassList()
     myHead;
     countItem = 0;
 }
-
 ClassList::~ClassList()
 {
     struct node* old = nullptr;
@@ -31,7 +30,6 @@ void ClassList::addItem(Student data)
     myHead = newItem;
     countItem++;
 }
-
 void ClassList::insertItem(int index, Student data) {
     if (not (index >= 0 and index <= countItem and countItem >= 0))
         return;
@@ -49,13 +47,11 @@ void ClassList::insertItem(int index, Student data) {
         countItem++;
     }
 }
-
 void ClassList::push_back(Student data) {
     insertItem(countItem, data);
 }
-
 void ClassList::editItem(int index, Student data) {
-    if (index >= 0 and index < countItem and countItem>0) {
+    if (index >= 0 and index < countItem and countItem > 0) {
         struct node* current = myHead;
         for (int i = 0; i < index; i++) {
             current = current->next;
@@ -66,7 +62,6 @@ void ClassList::editItem(int index, Student data) {
         cout << endl << "Техническая ошибка отладки (недопустимый индекс листа)";
     }
 }
-
 int ClassList::getIndex(string id)
 {
     int index = 0;
@@ -81,7 +76,6 @@ int ClassList::getIndex(string id)
         }
     }
 }
-
 void ClassList::deleteItem(int index) {
     if (index >= 0 and index < countItem and countItem>0) {
         struct node* current = myHead;
@@ -108,12 +102,10 @@ void ClassList::deleteItem(int index) {
         }
     }
 }
-
 int ClassList::getCount() {
     return countItem;
 }
-
-Student ClassList::getItem(string id)
+Student* ClassList::getItem(string id)
 {
     Student* data = new Student;
     struct node* current = myHead;
@@ -122,22 +114,21 @@ Student ClassList::getItem(string id)
         *data = current->data;
         if (data->get(7) == id)
         {
-            return *data;
+            return data;
         }
     }
 }
-
-Student ClassList::getItem(int index)
+Student* ClassList::getItem(int index)
 {
     Student *data = new Student;
     struct node* current = myHead;
-    int i = 1;
+    int i = 0;
     while (current != nullptr)
     {
         *data = current->data;
         if (i == index)
         {
-            return *data;
+            return data;
         }
         else
         {
@@ -146,7 +137,6 @@ Student ClassList::getItem(int index)
         }
     }
 }
-
 void ClassList::printItems()
 {
     int index = 1;

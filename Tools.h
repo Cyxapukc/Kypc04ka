@@ -3,7 +3,8 @@
 using namespace std;
 
 bool IsNum(char ch);
-char menuIntInput(int first, int end, const char fl[]);
+char menuIntInput(int first, int end, const char fl[] = "0");
 bool DateCheck(string date);
 string ConsoleInput(const int len, const char tag[] = "all");
-int countRecords(string filename);
+string to_string(const int& x);
+string to_string(const float& x);

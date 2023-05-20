@@ -5,14 +5,12 @@ using namespace std;
 
 struct Exams
 {
-	string name = "exam";
-	string mark = "0";
+	char mark = '0';
 	bool isEmpty = true;
 };
-
 class Student
 {
-private:
+public:
 	string surname;
 	string name;
 	string midname;
@@ -24,12 +22,10 @@ private:
 	string enteranceYear;
 	string sex;
 	Exams examsData[9][10];
-
-public:
 	Student();
 	~Student();
+	void setDefault();
 	string get(const int Action);
-	void setDefaultData();
 	void printInfo();
 	void printShortInfo(int index);
 	void editData();

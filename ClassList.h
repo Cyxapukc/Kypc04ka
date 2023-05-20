@@ -24,7 +24,7 @@ public:
     int getIndex(string id);
     void deleteItem(int index);
     int getCount();
-    Student getItem(string id);
-    Student getItem(int index);
+    Student* getItem(string id);
+    Student* getItem(int index);
     void printItems();
 };

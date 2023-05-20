@@ -6,10 +6,16 @@
 #include "Menu.h"
 #include "Tools.h"
 #include "Menu_Tools.h"
-
 using namespace std;
 
 Student::Student()
+{
+}
+Student::~Student()
+{
+}
+
+void Student::setDefault()
 {
 	this->surname = "Иванов";
 	this->name = "Иван";
@@ -24,13 +30,9 @@ Student::Student()
 	for (int i = 0; i < 9; i++)
 		for (int j = 0; j < 10; j++) {
 			this->examsData[i][j].isEmpty = true;
+			this->examsData[i][j].mark = '0';
 		}
 }
-
-Student::~Student()
-{
-}
-
 string Student::get(const int Action)
 {
 	switch (Action)
@@ -45,26 +47,7 @@ string Student::get(const int Action)
 	case 8: {return this->birthday; }
 	case 9: {return this->enteranceYear; }
 	case 10: {return this->sex; }
-	case 11: {; } //EXAMS
 	}
-}
-
-void Student::setDefaultData()
-{
-	this->surname = "Иванов";
-	this->name = "Иван";
-	this->midname = "Иванович";
-	this->institute = "ИКБ";
-	this->department = "Информационная_безопасность";
-	this->group = "БАСО-00-00";
-	this->id = "1234567890";
-	this->birthday = "01.01.1982";
-	this->sex = "Мужской";
-	this->enteranceYear = "2000";
-	for (int i = 0; i < 9; i++)
-		for (int j = 0; j < 10; j++) {
-			this->examsData[i][j].isEmpty = true;
-		}
 }
 void Student::printInfo()
 {
@@ -94,35 +77,35 @@ void Student::editData()
 	string value;
 	system("cls");
 	printIdMenu();
-	Action = menuIntInput(1, 9, "id");
+	Action = menuIntInput(1, 8, "id");
 	switch (Action)
 	{
 	case '1': {
-		cout << "Новое имя: ";
+		drawLine('|', "Новое имя: ");
 		value = ConsoleInput(20, "char");
 		this->name = value;
-		cout << "Новая фамилия: ";
+		drawLine('|', "Новая фамилия: ");
 		value = ConsoleInput(20, "char");
 		this->surname = value;
-		cout << "Новое отчество: ";
+		drawLine('|', "Новое отчество: ");
 		value = ConsoleInput(20, "char");
 		this->midname = value;
 		break;
 	}
 	case '2': {
-		cout << "Новый институт: ";
+		drawLine('|', "Новый институт: ");
 		value = ConsoleInput(20, "char");
 		this->institute = value;
 		break;
 	}
 	case '3': {
-		cout << "Новое подразделение: ";
+		drawLine('|', "Новое подразделение: ");
 		value = ConsoleInput(20, "char");
 		this->department = value;
 		break;
 	}
 	case '4': {
-		cout << "Новая группа: ";
+		drawLine('|', "Новая группа: ");
 		value = ConsoleInput(10);
 		this->group = value;
 		break;
@@ -134,27 +117,22 @@ void Student::editData()
 		break;
 	}
 	case '6': {
-		while (!DateCheck(value)) {
-			cout << "Новая дата рождения (ДД.ММ.ГГГГ): ";
+		do {
+			drawLine('|', "Новая дата рождения (ДД.ММ.ГГГГ): ");
 			value = ConsoleInput(10);
-		}
+		} while (!DateCheck(value));
 		this->birthday = value;
 		break;
 	}
 	case '7': {
-		cout << "Новый год поступления: ";
+		drawLine('|', "Новый год поступления: ");
 		value = ConsoleInput(4, "num");
 		this->enteranceYear = value;
 		break;
 	}
 	case '8': {
-		cout << " ";
-		value = ConsoleInput(20);
-		break;
-	}
-	case '9': {
 		system("cls");
-		return;
+		break;
 	}
 	default:
 		break;
