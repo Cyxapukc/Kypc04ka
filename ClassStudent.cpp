@@ -26,22 +26,6 @@ void Student::setDefault()
 			this->examsData[i][j].mark = '0';
 		}
 }
-string Student::get(const int Action)
-{
-	switch (Action)
-	{
-	case 1: {return this->surname; }
-	case 2: {return this->name; }
-	case 3: {return this->midname; }
-	case 4: {return this->institute; }
-	case 5: {return this->department; }
-	case 6: {return this->group; }
-	case 7: {return this->id; }
-	case 8: {return this->birthday; }
-	case 9: {return this->enteranceYear; }
-	case 10: {return this->sex; }
-	}
-}
 void Student::printInfo()
 {
 	drawLine('-');

@@ -24,7 +24,6 @@ public:
 	string sex;
 	Exams examsData[9][10];
 	void setDefault();
-	string get(const int Action);
 	void printInfo();
 	void printShortInfo(int index);
 	void editData();
