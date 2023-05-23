@@ -499,7 +499,7 @@ void Main_menu(ClassList *list, string** programm, std::string file_name, std::s
                 drawLine('-');
                 setInCenter("---<=== ÇÀÂÅÐØÅÍÈÅ ÐÀÁÎÒÛ ÏÐÎÃÐÀÌÌÛ ===>---");
                 drawLine('-');
-                exit(0);
+                return;
                 }
             case '1': {
                 file.open(file_name, fstream::out);
@@ -532,7 +532,8 @@ void Main_menu(ClassList *list, string** programm, std::string file_name, std::s
                 drawLine('-');
                 setInCenter("---<=== ÇÀÂÅÐØÅÍÈÅ ÐÀÁÎÒÛ ÏÐÎÃÐÀÌÌÛ ===>---");
                 drawLine('-');
-                exit(0);
+                file.close();
+                return;
             }
             }
         }

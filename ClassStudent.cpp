@@ -8,13 +8,6 @@
 #include "Menu_Tools.h"
 using namespace std;
 
-Student::Student()
-{
-}
-Student::~Student()
-{
-}
-
 void Student::setDefault()
 {
 	this->surname = "Иванов";

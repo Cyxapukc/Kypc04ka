@@ -8,6 +8,7 @@ struct Exams
 	char mark = '0';
 	bool isEmpty = true;
 };
+
 class Student
 {
 public:
@@ -22,8 +23,6 @@ public:
 	string enteranceYear;
 	string sex;
 	Exams examsData[9][10];
-	Student();
-	~Student();
 	void setDefault();
 	string get(const int Action);
 	void printInfo();
